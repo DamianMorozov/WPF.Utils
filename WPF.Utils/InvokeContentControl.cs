@@ -1,49 +1,41 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
-// ReSharper disable UnusedMember.Global
 
 namespace WPF.Utils
 {
     public static class InvokeContentControl
     {
-        public static class Properties
+        private static void SetContentWork(ContentControl item, string value)
         {
-            public static Task SetContent(System.Windows.Controls.ContentControl item, string value)
-            {
-                return Task.Run(() =>
-                {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Content = value;
-                        });
-                    }
-                    else
-                    {
-                        item.Content = value;
-                    }
-                });
-            }
+            item.Content = value;
+        }
 
-            public static Task AddContent(System.Windows.Controls.ContentControl item, string value)
-            {
-                return Task.Run(() =>
+        public static void SetContent(ContentControl item, string value)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Content += value + Environment.NewLine;
-                        });
-                    }
-                    else
-                    {
-                        item.Content += value + Environment.NewLine;
-                    }
+                    SetContentWork(item, value);
                 });
-            }
+            else
+                SetContentWork(item, value);
+        }
+
+        private static void AddContentWork(ContentControl item, string value)
+        {
+            item.Content += value + Environment.NewLine;
+        }
+
+        public static void AddContent(ContentControl item, string value)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    AddContentWork(item, value);
+                });
+            else
+                AddContentWork(item, value);
         }
     }
 }

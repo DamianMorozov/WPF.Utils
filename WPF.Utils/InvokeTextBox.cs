@@ -1,98 +1,93 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
-// ReSharper disable UnusedMember.Global
 
 namespace WPF.Utils
 {
     public static class InvokeTextBox
     {
-        public static class Methods
+        private static void ClearWork(TextBox item)
         {
-            public static Task Clear(System.Windows.Controls.TextBox item)
-            {
-                return Task.Run(() =>
-                {
-                    if (!item.CheckAccess())
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)item.Clear);
-                    else
-                        item.Clear();
-                });
-            }
+            item.Clear();
+        }
 
-            public static Task SetText(System.Windows.Controls.TextBox item, string text)
-            {
-                return Task.Run(() =>
+        public static void Clear(TextBox item)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Text = text;
-                        });
-                    }
-                    else
-                    {
-                        item.Text = text;
-                    }
-                });
-            }
+                    ClearWork(item);
 
-            public static Task<string> GetText(System.Windows.Controls.TextBox item)
-            {
-                return Task.Run(() =>
-                {
-                    var result = string.Empty;
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            result = item.Text;
-                        });
-                    }
-                    else
-                    {
-                        result = item.Text;
-                    }
-                    return result;
                 });
-            }
+            else
+                ClearWork(item);
+        }
 
-            public static Task AddText(System.Windows.Controls.TextBox item, string text)
-            {
-                return Task.Run(() =>
-                {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Text += text + Environment.NewLine;
-                        });
-                    }
-                    else
-                    {
-                        item.Text += text + Environment.NewLine;
-                    }
-                });
-            }
+        private static void SetTextWork(TextBox item, string text)
+        {
+            item.Text = text;
+        }
 
-            public static Task AddTextFormat(System.Windows.Controls.TextBox item, System.Diagnostics.Stopwatch sw, string text)
-            {
-                return Task.Run(() =>
+        public static void SetText(TextBox item, string text)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Text += $@"[{sw.Elapsed}] {text}" + Environment.NewLine;
-                        });
-                    }
-                    else
-                    {
-                        item.Text += $@"[{sw.Elapsed}] {text}" + Environment.NewLine;
-                    }
+                    SetTextWork(item, text);
                 });
-            }
+            else
+                SetTextWork(item, text);
+        }
+
+        private static string GetTextWork(TextBox item)
+        {
+            return item.Text;
+        }
+
+        public static string GetText(TextBox item)
+        {
+            var result = string.Empty;
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    result = GetTextWork(item);
+                });
+            else
+                result = GetTextWork(item);
+            return result;
+        }
+
+        private static void AddTextWork(TextBox item, string text)
+        {
+            item.Text += text + Environment.NewLine;
+        }
+
+        public static void AddText(TextBox item, string text)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    AddTextWork(item, text);
+                });
+            else
+                AddTextWork(item, text);
+        }
+
+        private static void AddTextFormatWork(TextBox item, System.Diagnostics.Stopwatch sw, string text)
+        {
+            item.Text += $@"[{sw.Elapsed}] {text}" + Environment.NewLine;
+        }
+
+        public static void AddTextFormat(TextBox item, System.Diagnostics.Stopwatch sw, string text)
+        {
+            if (!item.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    AddTextFormatWork(item, sw, text);
+                });
+            else
+                AddTextFormatWork(item, sw, text);
         }
     }
 }

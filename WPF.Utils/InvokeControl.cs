@@ -1,91 +1,90 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
-
-// ReSharper disable UnusedMember.Global
 
 namespace WPF.Utils
 {
     public static class InvokeControl
     {
-        public static class Properties
+        private static void SetVisibilityWork(Control control, Visibility value)
         {
-            public static class SetVisibility
-            {
-                public static Task Async(System.Windows.Controls.Control item, System.Windows.Visibility value)
-                {
-                    return Task.Run(() =>
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Visibility = value;
-                        });
-                    });
-                }
-            }
-
-            public static class SetIsEnabled
-            {
-                public static Task Async(System.Windows.Controls.Control item, bool value)
-                {
-                    return Task.Run(() =>
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.IsEnabled = value;
-                        });
-                    });
-                }
-            }
-
-            public static class SetBackground
-            {
-                public static Task Async(System.Windows.Controls.Control item, System.Windows.Media.Brush value)
-                {
-                    return Task.Run(() =>
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Background = value;
-                        });
-                    });
-                }
-            }
-
-            public static class SetForeground
-            {
-                public static Task Async(System.Windows.Controls.Control item, System.Windows.Media.Brush value)
-                {
-                    return Task.Run(() =>
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Foreground = value;
-                        });
-                    });
-                }
-            }
+            control.Visibility = value;
         }
 
-        public static class Methods
+        public static void SetVisibility(Control control, Visibility value)
         {
-            public static Task Focus(System.Windows.Controls.Control item)
-            {
-                return Task.Run(() =>
+            if (!control.CheckAccess())
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Focus();
-                        });
-                    }
-                    else
-                    {
-                        item.Focus();
-                    }
+                    SetVisibilityWork(control, value);
                 });
-            }
+            else
+                SetVisibilityWork(control, value);
+        }
+
+        private static void SetIsEnabledWork(Control control, bool value)
+        {
+            control.IsEnabled = value;
+        }
+
+        public static void SetIsEnabled(Control control, bool value)
+        {
+            if (!control.CheckAccess())
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    SetIsEnabledWork(control, value);
+                });
+            else
+                SetIsEnabledWork(control, value);
+        }
+
+        private static void SetBackgroundWork(Control control, System.Windows.Media.Brush value)
+        {
+            control.Background = value;
+        }
+
+        public static void SetBackground(Control control, System.Windows.Media.Brush value)
+        {
+            if (!control.CheckAccess())
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    SetBackgroundWork(control, value);
+                });
+            else
+                SetBackgroundWork(control, value);
+        }
+
+        private static void SetForegroundWork(Control control, System.Windows.Media.Brush value)
+        {
+            control.Foreground = value;
+        }
+
+        public static void SetForeground(Control control, System.Windows.Media.Brush value)
+        {
+            if (!control.CheckAccess())
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    SetForegroundWork(control, value);
+                });
+            else
+                SetForegroundWork(control, value);
+        }
+
+        private static void FocusWork(Control control)
+        {
+            control.Focus();
+        }
+
+        public static void Focus(Control control)
+        {
+            if (!control.CheckAccess())
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    FocusWork(control);
+                });
+            else
+                FocusWork(control);
         }
     }
 }

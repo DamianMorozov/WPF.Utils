@@ -1,67 +1,57 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
-// ReSharper disable UnusedMember.Global
 
 namespace WPF.Utils
 {
     public static class InvokeProgressBar
     {
-        public static class Methods
+        private static void SetValueWork(ProgressBar control, int value)
         {
-            public static Task SetValue(System.Windows.Controls.ProgressBar item, int value)
-            {
-                return Task.Run(() =>
-                {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Value = value;
-                        });
-                    }
-                    else
-                    {
-                        item.Value = value;
-                    }
-                });
-            }
+            control.Value = value;
+        }
 
-            public static Task SetMinimum(System.Windows.Controls.ProgressBar item, int value)
-            {
-                return Task.Run(() =>
+        public static void SetValue(ProgressBar control, int value)
+        {
+            if (!control.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Minimum = value;
-                        });
-                    }
-                    else
-                    {
-                        item.Minimum = value;
-                    }
+                    SetValueWork(control, value);
                 });
-            }
+            else
+                SetValueWork(control, value);
+        }
 
-            public static Task SetMaximum(System.Windows.Controls.ProgressBar item, int value)
-            {
-                return Task.Run(() =>
+        private static void SetMinimumWork(ProgressBar control, int value)
+        {
+            control.Minimum = value;
+        }
+
+        public static void SetMinimum(ProgressBar control, int value)
+        {
+            if (!control.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
                 {
-                    if (!item.CheckAccess())
-                    {
-                        System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)delegate
-                        {
-                            item.Maximum = value;
-                        });
-                    }
-                    else
-                    {
-                        item.Maximum = value;
-                    }
+                    SetMinimumWork(control, value);
                 });
-            }
+            else
+                SetMinimumWork(control, value);
+        }
+
+        private static void SetMaximumWork(ProgressBar control, int value)
+        {
+            control.Maximum = value;
+        }
+
+        public static void SetMaximum(ProgressBar control, int value)
+        {
+            if (!control.CheckAccess())
+                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
+                {
+                    SetMaximumWork(control, value);
+                });
+            else
+                SetMaximumWork(control, value);
         }
     }
 }
