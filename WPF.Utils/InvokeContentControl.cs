@@ -6,36 +6,48 @@ namespace WPF.Utils
 {
     public static class InvokeContentControl
     {
-        private static void SetContentWork(ContentControl item, string value)
-        {
-            item.Content = value;
-        }
 
-        public static void SetContent(ContentControl item, string value)
+        public static void SetContent(ContentControl control, string value)
         {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetContentWork(item, value);
-                });
+            void Work(ContentControl inControl, string inValue)
+            {
+                inControl.Content = inValue;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(System.Windows.Application.Current is null))
+                    System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                SetContentWork(item, value);
+                Work(control, value);
         }
 
-        private static void AddContentWork(ContentControl item, string value)
-        {
-            item.Content += value + Environment.NewLine;
-        }
 
-        public static void AddContent(ContentControl item, string value)
+        public static void AddContent(ContentControl control, string value)
         {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    AddContentWork(item, value);
-                });
+            void Work(ContentControl inControl, string inValue)
+            {
+                inControl.Content += inValue + Environment.NewLine;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(System.Windows.Application.Current is null))
+                    System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                AddContentWork(item, value);
+                Work(control, value);
         }
     }
 }

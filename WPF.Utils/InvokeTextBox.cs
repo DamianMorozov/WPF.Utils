@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -7,87 +8,111 @@ namespace WPF.Utils
 {
     public static class InvokeTextBox
     {
-        private static void ClearWork(TextBox item)
+        public static void Clear(TextBox control)
         {
-            item.Clear();
-        }
-
-        public static void Clear(TextBox item)
-        {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    ClearWork(item);
-
-                });
+            void Work(TextBox inControl)
+            {
+                inControl.Clear();
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control);
+                    }));
             else
-                ClearWork(item);
+                Work(control);
         }
 
-        private static void SetTextWork(TextBox item, string text)
+        public static void SetText(TextBox control, string text)
         {
-            item.Text = text;
-        }
-
-        public static void SetText(TextBox item, string text)
-        {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetTextWork(item, text);
-                });
+            void Work(TextBox inControl, string inText)
+            {
+                inControl.Text = inText;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, text);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, text);
+                    }));
             else
-                SetTextWork(item, text);
+                Work(control, text);
         }
 
-        private static string GetTextWork(TextBox item)
-        {
-            return item.Text;
-        }
-
-        public static string GetText(TextBox item)
+        public static string GetText(TextBox control)
         {
             var result = string.Empty;
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    result = GetTextWork(item);
-                });
+            string Work(TextBox inControl)
+            {
+                return inControl.Text;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        result = Work(control);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        result = Work(control);
+                    }));
             else
-                result = GetTextWork(item);
+                result = Work(control);
             return result;
         }
 
-        private static void AddTextWork(TextBox item, string text)
+        public static void AddText(TextBox control, string text)
         {
-            item.Text += text + Environment.NewLine;
-        }
-
-        public static void AddText(TextBox item, string text)
-        {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    AddTextWork(item, text);
-                });
+            void Work(TextBox inControl, string inText)
+            {
+                inControl.Text += inText + Environment.NewLine;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, text);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, text);
+                    }));
             else
-                AddTextWork(item, text);
+                Work(control, text);
         }
 
-        private static void AddTextFormatWork(TextBox item, System.Diagnostics.Stopwatch sw, string text)
+        public static void AddTextFormat(TextBox control, Stopwatch sw, string text)
         {
-            item.Text += $@"[{sw.Elapsed}] {text}" + Environment.NewLine;
-        }
-
-        public static void AddTextFormat(TextBox item, System.Diagnostics.Stopwatch sw, string text)
-        {
-            if (!item.CheckAccess())
-                System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    AddTextFormatWork(item, sw, text);
-                });
+            void Work(TextBox inControl, Stopwatch inSw, string inText)
+            {
+                inControl.Text += $@"[{inSw.Elapsed}] {inText}" + Environment.NewLine;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, sw, text);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, sw, text);
+                    }));
             else
-                AddTextFormatWork(item, sw, text);
+                Work(control, sw, text);
         }
     }
 }

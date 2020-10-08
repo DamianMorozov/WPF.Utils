@@ -1,90 +1,116 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace WPF.Utils
 {
     public static class InvokeControl
     {
-        private static void SetVisibilityWork(Control control, Visibility value)
-        {
-            control.Visibility = value;
-        }
-
         public static void SetVisibility(Control control, Visibility value)
         {
-            if (!control.CheckAccess())
-                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetVisibilityWork(control, value);
-                });
+            void Work(Control inControl, Visibility inValue)
+            {
+                inControl.Visibility = inValue;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                SetVisibilityWork(control, value);
-        }
-
-        private static void SetIsEnabledWork(Control control, bool value)
-        {
-            control.IsEnabled = value;
+                Work(control, value);
         }
 
         public static void SetIsEnabled(Control control, bool value)
         {
-            if (!control.CheckAccess())
-                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetIsEnabledWork(control, value);
-                });
+            void Work(Control inControl, bool inValue)
+            {
+                inControl.IsEnabled = inValue;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                SetIsEnabledWork(control, value);
+                Work(control, value);
         }
 
-        private static void SetBackgroundWork(Control control, System.Windows.Media.Brush value)
+        public static void SetBackground(Control control, Brush value)
         {
-            control.Background = value;
-        }
-
-        public static void SetBackground(Control control, System.Windows.Media.Brush value)
-        {
-            if (!control.CheckAccess())
-                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetBackgroundWork(control, value);
-                });
+            void Work(Control inControl, Brush inValue)
+            {
+                inControl.Background = inValue;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                SetBackgroundWork(control, value);
+                Work(control, value);
         }
 
-        private static void SetForegroundWork(Control control, System.Windows.Media.Brush value)
+        public static void SetForeground(Control control, Brush value)
         {
-            control.Foreground = value;
-        }
-
-        public static void SetForeground(Control control, System.Windows.Media.Brush value)
-        {
-            if (!control.CheckAccess())
-                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    SetForegroundWork(control, value);
-                });
+            void Work(Control inControl, Brush inValue)
+            {
+                inControl.Foreground = inValue;
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, value);
+                    }));
             else
-                SetForegroundWork(control, value);
-        }
-
-        private static void FocusWork(Control control)
-        {
-            control.Focus();
+                Work(control, value);
         }
 
         public static void Focus(Control control)
         {
-            if (!control.CheckAccess())
-                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) delegate
-                {
-                    FocusWork(control);
-                });
+            void Work(Control inControl)
+            {
+                inControl.Focus();
+            }
+            if (!(control is null) && !control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control);
+                    }));
             else
-                FocusWork(control);
+                Work(control);
         }
     }
 }
