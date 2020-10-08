@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.60] - 2020-10-07
+## [0.1.70] - 2020-10-08
 ### Changed
 - WPF.Utils project
   - InvokeContentControl
