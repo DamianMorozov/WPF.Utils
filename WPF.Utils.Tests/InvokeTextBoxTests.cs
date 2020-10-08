@@ -51,7 +51,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(Clear_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.Clear(control));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.Clear(control)));
@@ -65,7 +65,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(AddText_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.AddText(control, "test 1"));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.AddText(control, "test 2")));
@@ -80,7 +80,7 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(AddTextFormat_DoesNotThrow)} start.");
             var sw = Stopwatch.StartNew();
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.AddTextFormat(control, sw, "test 1"));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.AddTextFormat(control, sw, "test 2")));
@@ -95,7 +95,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(GetText_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.GetText(control));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.GetText(control)));
@@ -109,7 +109,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(SetText_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.SetText(control, "test 1"));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.SetText(control, "test 2")));

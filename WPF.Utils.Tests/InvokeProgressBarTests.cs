@@ -50,7 +50,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(SetMaximum_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out ProgressBar control))
             {
                 Assert.DoesNotThrow(() => InvokeProgressBar.SetMaximum(control, 100));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetMaximum(control, 100)));
@@ -64,7 +64,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(SetMinimum_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out ProgressBar control))
             {
                 Assert.DoesNotThrow(() => InvokeProgressBar.SetMinimum(control, 0));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetMinimum(control, 100)));
@@ -78,7 +78,7 @@ namespace WPF.Utils.Tests
         {
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(SetValue_DoesNotThrow)} start.");
-            foreach (var control in _controls)
+            while (_controls.TryDequeue(out ProgressBar control))
             {
                 Assert.DoesNotThrow(() => InvokeProgressBar.SetValue(control, 50));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetValue(control, 100)));
