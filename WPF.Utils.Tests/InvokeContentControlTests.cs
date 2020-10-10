@@ -25,9 +25,12 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(Setup)} start.");
             _controls = new ConcurrentQueue<ContentControl>();
-            _controls.Enqueue(new Label());
-            _controls.Enqueue(new Button());
-            _controls.Enqueue(new CheckBox());
+            for (int i = 0; i < 10; i++)
+            {
+                _controls.Enqueue(new Label());
+                _controls.Enqueue(new Button());
+                _controls.Enqueue(new CheckBox());
+            }
             TestContext.WriteLine($@"{nameof(Setup)} complete.");
         }
 
@@ -53,8 +56,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(SetContent_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out ContentControl control))
             {
-                Assert.DoesNotThrow(() => InvokeContentControl.SetContent(control, "test 1"));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.SetContent(control, "test 2")));
+                foreach (var value in EnumValues.GetString())
+                {
+                    Assert.DoesNotThrow(() => InvokeContentControl.SetContent(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.SetContent(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(SetContent_DoesNotThrow)} complete.");
         }
@@ -67,8 +73,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(AddContent_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out ContentControl control))
             {
-                Assert.DoesNotThrow(() => InvokeContentControl.AddContent(control, "test 1"));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.AddContent(control, "test 2")));
+                foreach (var value in EnumValues.GetString())
+                {
+                    Assert.DoesNotThrow(() => InvokeContentControl.AddContent(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.AddContent(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(AddContent_DoesNotThrow)} complete.");
         }
