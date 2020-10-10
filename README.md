@@ -5,6 +5,8 @@
 - InvokeTextBox
 
 # WPF.Utils.Tests
+- EnumValues
+- EnumWPF
 - InvokeContentControlTests
 - InvokeControlTests
 - InvokeProgressBarTests
