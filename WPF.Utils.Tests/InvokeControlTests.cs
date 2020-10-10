@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace WPF.Utils.Tests
 {
@@ -27,10 +27,13 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine(@"--------------------------------------------------------------------------------");
             TestContext.WriteLine($@"{nameof(Setup)} start.");
             _controls = new ConcurrentQueue<Control>();
-            _controls.Enqueue(new Label());
-            _controls.Enqueue(new Button());
-            _controls.Enqueue(new CheckBox());
-            _controls.Enqueue(new TextBox());
+            for (int i = 0; i < 10; i++)
+            {
+                _controls.Enqueue(new Label());
+                _controls.Enqueue(new Button());
+                _controls.Enqueue(new CheckBox());
+                _controls.Enqueue(new TextBox());
+            }
             TestContext.WriteLine($@"{nameof(Setup)} complete.");
         }
 
@@ -70,8 +73,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(SetBackground_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out Control control))
             {
-                Assert.DoesNotThrow(() => InvokeControl.SetBackground(control, Brushes.Transparent));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetBackground(control, Brushes.Transparent)));
+                foreach (var value in EnumWPF.GetBrush())
+                {
+                    Assert.DoesNotThrow(() => InvokeControl.SetBackground(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetBackground(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(SetBackground_DoesNotThrow)} complete.");
         }
@@ -84,8 +90,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(SetForeground_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out Control control))
             {
-                Assert.DoesNotThrow(() => InvokeControl.SetForeground(control, Brushes.Transparent));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetForeground(control, Brushes.Transparent)));
+                foreach (var value in EnumWPF.GetBrush())
+                {
+                    Assert.DoesNotThrow(() => InvokeControl.SetForeground(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetForeground(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(SetForeground_DoesNotThrow)} complete.");
         }
@@ -98,8 +107,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(SetIsEnabled_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out Control control))
             {
-                Assert.DoesNotThrow(() => InvokeControl.SetIsEnabled(control, true));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetIsEnabled(control, true)));
+                foreach (var value in EnumValues.GetBool())
+                {
+                    Assert.DoesNotThrow(() => InvokeControl.SetIsEnabled(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetIsEnabled(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(SetIsEnabled_DoesNotThrow)} complete.");
         }
@@ -112,8 +124,11 @@ namespace WPF.Utils.Tests
             TestContext.WriteLine($@"{nameof(SetVisibility_DoesNotThrow)} start.");
             while (_controls.TryDequeue(out Control control))
             {
-                Assert.DoesNotThrow(() => InvokeControl.SetVisibility(control, Visibility.Visible));
-                //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetVisibility(control, Visibility.Visible)));
+                foreach (Visibility value in Enum.GetValues(typeof(Visibility)))
+                {
+                    Assert.DoesNotThrow(() => InvokeControl.SetVisibility(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetVisibility(control, value)));
+                }
             }
             TestContext.WriteLine($@"{nameof(SetVisibility_DoesNotThrow)} complete.");
         }
