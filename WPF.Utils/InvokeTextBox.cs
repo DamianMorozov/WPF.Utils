@@ -10,11 +10,13 @@ namespace WPF.Utils
     {
         public static void Clear(TextBox control)
         {
+            if (control is null)
+                return;
             void Work(TextBox inControl)
             {
                 inControl.Clear();
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -31,11 +33,13 @@ namespace WPF.Utils
 
         public static void SetText(TextBox control, string text)
         {
+            if (control is null)
+                return;
             void Work(TextBox inControl, string inText)
             {
                 inControl.Text = inText;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -53,11 +57,13 @@ namespace WPF.Utils
         public static string GetText(TextBox control)
         {
             var result = string.Empty;
+            if (control is null)
+                return result;
             string Work(TextBox inControl)
             {
                 return inControl.Text;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -75,11 +81,13 @@ namespace WPF.Utils
 
         public static void AddText(TextBox control, string text)
         {
+            if (control is null)
+                return;
             void Work(TextBox inControl, string inText)
             {
                 inControl.Text += inText + Environment.NewLine;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -96,11 +104,13 @@ namespace WPF.Utils
 
         public static void AddTextFormat(TextBox control, Stopwatch sw, string text)
         {
+            if (control is null)
+                return;
             void Work(TextBox inControl, Stopwatch inSw, string inText)
             {
                 inControl.Text += $@"[{inSw.Elapsed}] {inText}" + Environment.NewLine;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -113,6 +123,34 @@ namespace WPF.Utils
                     }));
             else
                 Work(control, sw, text);
+        }
+
+        public static void AddTextFormat(TextBox control, DateTime dt, string text)
+        {
+            if (control is null)
+                return;
+            void Work(TextBox inControl, DateTime inDt, string inText)
+            {
+                inControl.Text += $@"[{inDt}] {inText}" + Environment.NewLine;
+            }
+            if (!control.CheckAccess())
+                if (!(Application.Current is null))
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, dt, text);
+                    }));
+                else
+                    control.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        Work(control, dt, text);
+                    }));
+            else
+                Work(control, dt, text);
+        }
+
+        public static void AddTextFormat(TextBox control, string text)
+        {
+            AddTextFormat(control, DateTime.Now, text);
         }
     }
 }
