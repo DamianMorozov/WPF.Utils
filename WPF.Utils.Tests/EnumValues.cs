@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
 // ReSharper disable UnusedMember.Global
-// Last changed 2020-10-10.
+// Last changed 2020-10-12.
 
 namespace WPF.Utils.Tests
 {
@@ -71,6 +71,15 @@ namespace WPF.Utils.Tests
         public static List<int> GetInt()
         {
             return new List<int>() { int.MinValue, 1, int.MaxValue / 2, int.MaxValue };
+        }
+
+        /// <summary>
+        /// List of DateTime values.
+        /// </summary>
+        /// <returns></returns>
+        public static List<DateTime> GetDateTime()
+        {
+            return new List<DateTime>() { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.Today, DateTime.UtcNow };
         }
 
         /// <summary>
