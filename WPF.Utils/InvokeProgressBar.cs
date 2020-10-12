@@ -9,11 +9,13 @@ namespace WPF.Utils
     {
         public static void SetValue(ProgressBar control, int value)
         {
+            if (control is null)
+                return;
             void Work(ProgressBar inControl, int inValue)
             {
                 inControl.Value = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -30,11 +32,13 @@ namespace WPF.Utils
 
         public static void SetMinimum(ProgressBar control, int value)
         {
+            if (control is null)
+                return;
             void Work(ProgressBar inControl, int inValue)
             {
                 inControl.Minimum = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -51,11 +55,13 @@ namespace WPF.Utils
 
         public static void SetMaximum(ProgressBar control, int value)
         {
+            if (control is null)
+                return;
             void Work(ProgressBar inControl, int inValue)
             {
                 inControl.Maximum = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
