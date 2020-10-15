@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7] - 2020-10-15
+### Added
+- Nuget package release
+
 ## [0.2.5] - 2020-10-10
 ### Changed
 - WPF.Utils.Tests.InvokeContentControlTests
