@@ -88,6 +88,12 @@ namespace WPF.Utils.Tests
                 foreach (var value in EnumValues.GetString())
                 {
                     Assert.DoesNotThrow(() => InvokeTextBox.AddTextFormat(control, sw, value));
+                    foreach (var dt in EnumValues.GetDateTime())
+                    {
+                        Assert.DoesNotThrow(() => InvokeTextBox.AddTextFormat(control, dt, value));
+                        TestContext.WriteLine($@"{InvokeTextBox.GetText(control)}");
+                    }
+                    Assert.DoesNotThrow(() => InvokeTextBox.AddTextFormat(control, value));
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.AddTextFormat(control, sw, value)));
                 }
             }

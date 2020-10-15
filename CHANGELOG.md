@@ -6,9 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.7] - 2020-10-15
+## [0.2.12] - 2020-10-15
 ### Added
 - Nuget package release
+
+## [0.2.11] - 2020-10-12
+### Changed
+- WPF.Utils.EnumValues
+- WPF.Utils.InvokeContentControl
+- WPF.Utils.InvokeControl
+- WPF.Utils.InvokeProgressBar
+- WPF.Utils.InvokeTextBox
+- WPF.Utils.Tests.InvokeTextBoxTests
 
 ## [0.2.5] - 2020-10-10
 ### Changed

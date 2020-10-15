@@ -10,11 +10,13 @@ namespace WPF.Utils
 
         public static void SetContent(ContentControl control, string value)
         {
+            if (control is null)
+                return;
             void Work(ContentControl inControl, string inValue)
             {
                 inControl.Content = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(System.Windows.Application.Current is null))
                     System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -32,11 +34,13 @@ namespace WPF.Utils
 
         public static void AddContent(ContentControl control, string value)
         {
+            if (control is null)
+                return;
             void Work(ContentControl inControl, string inValue)
             {
                 inControl.Content += inValue + Environment.NewLine;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(System.Windows.Application.Current is null))
                     System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {

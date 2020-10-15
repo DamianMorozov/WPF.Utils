@@ -11,11 +11,13 @@ namespace WPF.Utils
     {
         public static void SetVisibility(Control control, Visibility value)
         {
+            if (control is null)
+                return;
             void Work(Control inControl, Visibility inValue)
             {
                 inControl.Visibility = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -32,11 +34,13 @@ namespace WPF.Utils
 
         public static void SetIsEnabled(Control control, bool value)
         {
+            if (control is null)
+                return;
             void Work(Control inControl, bool inValue)
             {
                 inControl.IsEnabled = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -53,11 +57,13 @@ namespace WPF.Utils
 
         public static void SetBackground(Control control, Brush value)
         {
+            if (control is null)
+                return;
             void Work(Control inControl, Brush inValue)
             {
                 inControl.Background = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -74,11 +80,13 @@ namespace WPF.Utils
 
         public static void SetForeground(Control control, Brush value)
         {
+            if (control is null)
+                return;
             void Work(Control inControl, Brush inValue)
             {
                 inControl.Foreground = inValue;
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
@@ -95,11 +103,13 @@ namespace WPF.Utils
 
         public static void Focus(Control control)
         {
+            if (control is null)
+                return;
             void Work(Control inControl)
             {
                 inControl.Focus();
             }
-            if (!(control is null) && !control.CheckAccess())
+            if (!control.CheckAccess())
                 if (!(Application.Current is null))
                     Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
                     {
