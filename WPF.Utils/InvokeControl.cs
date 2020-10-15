@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+// ReSharper disable UnusedMember.Global
 
 namespace WPF.Utils
 {
