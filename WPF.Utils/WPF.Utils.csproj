@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvokeProgressBar.cs" />
+    <Compile Include="InvokeListBox.cs" />
     <Compile Include="InvokeTextBox.cs" />
     <Compile Include="InvokeControl.cs" />
     <Compile Include="InvokeContentControl.cs" />
