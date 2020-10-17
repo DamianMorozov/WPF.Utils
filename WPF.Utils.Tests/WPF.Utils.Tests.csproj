@@ -48,9 +48,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils.cs" />
     <Compile Include="EnumWPF.cs" />
     <Compile Include="EnumValues.cs" />
     <Compile Include="InvokeProgressBarTests.cs" />
+    <Compile Include="InvokeListBoxTests.cs" />
     <Compile Include="InvokeTextBoxTests.cs" />
     <Compile Include="InvokeControlTests.cs" />
     <Compile Include="InvokeContentControlTests.cs" />
