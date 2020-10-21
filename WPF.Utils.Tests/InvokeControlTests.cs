@@ -24,8 +24,7 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Setup()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Setup)} start.");
+            Utils.MethodStart();
             _controls = new ConcurrentQueue<Control>();
             for (int i = 0; i < 10; i++)
             {
@@ -34,7 +33,7 @@ namespace WPF.Utils.Tests
                 _controls.Enqueue(new CheckBox());
                 _controls.Enqueue(new TextBox());
             }
-            TestContext.WriteLine($@"{nameof(Setup)} complete.");
+            Utils.MethodComplete();
         }
 
         /// <summary>
@@ -44,33 +43,29 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Teardown()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Teardown)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out _)) { }
-            TestContext.WriteLine($@"{nameof(Teardown)} complete.");
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void Focus_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Focus_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out Control control))
             {
                 Assert.DoesNotThrow(() => InvokeControl.Focus(control));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.Focus(control)));
             }
-            TestContext.WriteLine($@"{nameof(Focus_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetBackground_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetBackground_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out Control control))
             {
                 foreach (var value in EnumWPF.GetBrush())
@@ -79,15 +74,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetBackground(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetBackground_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetForeground_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetForeground_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out Control control))
             {
                 foreach (var value in EnumWPF.GetBrush())
@@ -96,15 +90,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetForeground(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetForeground_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetIsEnabled_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetIsEnabled_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out Control control))
             {
                 foreach (var value in EnumValues.GetBool())
@@ -113,15 +106,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetIsEnabled(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetIsEnabled_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetVisibility_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetVisibility_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out Control control))
             {
                 foreach (Visibility value in Enum.GetValues(typeof(Visibility)))
@@ -130,7 +122,7 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeControl.SetVisibility(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetVisibility_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
     }
 }

@@ -23,12 +23,11 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Setup()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Setup)} start.");
+            Utils.MethodStart();
             _controls = new ConcurrentQueue<TextBox>();
             for (var i = 0; i < 10; i++)
                 _controls.Enqueue(new TextBox());
-            TestContext.WriteLine($@"{nameof(Setup)} complete.");
+            Utils.MethodComplete();
         }
 
         /// <summary>
@@ -38,33 +37,29 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Teardown()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Teardown)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out _)) { }
-            TestContext.WriteLine($@"{nameof(Teardown)} complete.");
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void Clear_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Clear_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.Clear(control));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.Clear(control)));
             }
-            TestContext.WriteLine($@"{nameof(Clear_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void AddText_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(AddText_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out TextBox control))
             {
                 foreach (var value in EnumValues.GetString())
@@ -73,15 +68,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.AddText(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(AddText_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void AddTextFormat_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(AddTextFormat_DoesNotThrow)} start.");
+            Utils.MethodStart();
             var sw = Stopwatch.StartNew();
             while (_controls.TryDequeue(out TextBox control))
             {
@@ -98,29 +92,27 @@ namespace WPF.Utils.Tests
                 }
             }
             sw.Stop();
-            TestContext.WriteLine($@"{nameof(AddTextFormat_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void GetText_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(GetText_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out TextBox control))
             {
                 Assert.DoesNotThrow(() => InvokeTextBox.GetText(control));
                 //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.GetText(control)));
             }
-            TestContext.WriteLine($@"{nameof(GetText_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetText_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetText_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out TextBox control))
             {
                 foreach (var value in EnumValues.GetString())
@@ -129,7 +121,7 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeTextBox.SetText(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetText_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
     }
 }

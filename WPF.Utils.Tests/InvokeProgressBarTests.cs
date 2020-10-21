@@ -22,12 +22,11 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Setup()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Setup)} start.");
+            Utils.MethodStart();
             _controls = new ConcurrentQueue<ProgressBar>();
             for (var i = 0; i < 10; i++)
                 _controls.Enqueue(new ProgressBar());
-            TestContext.WriteLine($@"{nameof(Setup)} complete.");
+            Utils.MethodComplete();
         }
 
         /// <summary>
@@ -37,19 +36,16 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Teardown()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Teardown)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out _)) { }
-            TestContext.WriteLine($@"{nameof(Teardown)} complete.");
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetMaximum_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetMaximum_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out ProgressBar control))
             {
                 foreach (var value in EnumValues.GetProgress())
@@ -58,15 +54,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetMaximum(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetMaximum_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetMinimum_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetMinimum_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out ProgressBar control))
             {
                 foreach (var value in EnumValues.GetProgress())
@@ -75,15 +70,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetMinimum(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetMinimum_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetValue_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetValue_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out ProgressBar control))
             {
                 foreach (var value in EnumValues.GetProgress())
@@ -92,7 +86,7 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeProgressBar.SetValue(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetValue_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
     }
 }

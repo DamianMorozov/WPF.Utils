@@ -22,12 +22,11 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Setup()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Setup)} start.");
+            Utils.MethodStart();
             _controls = new ConcurrentQueue<ListBox>();
             for (var i = 0; i < 10; i++)
                 _controls.Enqueue(new ListBox());
-            TestContext.WriteLine($@"{nameof(Setup)} complete.");
+            Utils.MethodComplete();
         }
 
         /// <summary>
@@ -37,11 +36,9 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Teardown()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Teardown)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out _)) { }
-            TestContext.WriteLine($@"{nameof(Teardown)} complete.");
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
+            Utils.MethodComplete();
         }
 
 

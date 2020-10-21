@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvokeWebBrowserTests.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="EnumWPF.cs" />
     <Compile Include="EnumValues.cs" />

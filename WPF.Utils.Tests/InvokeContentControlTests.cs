@@ -22,8 +22,7 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Setup()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Setup)} start.");
+            Utils.MethodStart();
             _controls = new ConcurrentQueue<ContentControl>();
             for (int i = 0; i < 10; i++)
             {
@@ -31,7 +30,7 @@ namespace WPF.Utils.Tests
                 _controls.Enqueue(new Button());
                 _controls.Enqueue(new CheckBox());
             }
-            TestContext.WriteLine($@"{nameof(Setup)} complete.");
+            Utils.MethodComplete();
         }
 
         /// <summary>
@@ -41,19 +40,16 @@ namespace WPF.Utils.Tests
         [Apartment(ApartmentState.STA)]
         public void Teardown()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(Teardown)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out _)) { }
-            TestContext.WriteLine($@"{nameof(Teardown)} complete.");
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void SetContent_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(SetContent_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out ContentControl control))
             {
                 foreach (var value in EnumValues.GetString())
@@ -62,15 +58,14 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.SetContent(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(SetContent_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
         }
 
         [Test]
         [Apartment(ApartmentState.STA)]
         public void AddContent_DoesNotThrow()
         {
-            TestContext.WriteLine(@"--------------------------------------------------------------------------------");
-            TestContext.WriteLine($@"{nameof(AddContent_DoesNotThrow)} start.");
+            Utils.MethodStart();
             while (_controls.TryDequeue(out ContentControl control))
             {
                 foreach (var value in EnumValues.GetString())
@@ -79,7 +74,23 @@ namespace WPF.Utils.Tests
                     //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.AddContent(control, value)));
                 }
             }
-            TestContext.WriteLine($@"{nameof(AddContent_DoesNotThrow)} complete.");
+            Utils.MethodComplete();
+        }
+        
+        [Test]
+        [Apartment(ApartmentState.STA)]
+        public void SetDataContext_DoesNotThrow()
+        {
+            Utils.MethodStart();
+            while (_controls.TryDequeue(out ContentControl control))
+            {
+                foreach (var value in EnumValues.GetString())
+                {
+                    Assert.DoesNotThrow(() => InvokeContentControl.SetDataContext(control, value));
+                    //Assert.DoesNotThrowAsync(async () => await Task.Run(() => InvokeContentControl.SetDataContext(control, value)));
+                }
+            }
+            Utils.MethodComplete();
         }
     }
 }
