@@ -9,6 +9,7 @@
 - InvokeListBox
 - InvokeProgressBar
 - InvokeTextBox
+- InvokeWebBrowser
 
 # WPF.Utils.Tests
 - EnumValues
@@ -17,3 +18,14 @@
 - InvokeControlTests
 - InvokeProgressBarTests
 - InvokeTextBoxTests
+
+## How to use
+Example of usage:
+
+```C#
+var task = Task.Run(async () =>
+{
+    InvokeTextBox.Clear(textBox);
+    await Task.Delay(TimeSpan.FromMilliseconds(_timeout));
+});
+```

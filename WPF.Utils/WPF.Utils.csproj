@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvokeWebBrowser.cs" />
     <Compile Include="InvokeProgressBar.cs" />
     <Compile Include="InvokeListBox.cs" />
     <Compile Include="InvokeTextBox.cs" />

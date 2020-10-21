@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.19] - 2020-10-21
+### Added
+- WPF.Utils.InvokeWebBrowser
+- WPF.Utils.Tests.InvokeWebBrowserTests
+### Changed
+- WPF.Utils.InvokeContentControl
+- WPF.Utils.Tests.InvokeContentControlTests
+
 ## [0.2.15] - 2020-10-17
 ### Added
 - WPF.Utils.InvokeListBox
