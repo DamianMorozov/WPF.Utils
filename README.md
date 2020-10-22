@@ -25,7 +25,7 @@ Example of usage:
 ```C#
 var task = Task.Run(async () =>
 {
+    await Task.Delay(TimeSpan.FromMilliseconds(_timeout)).ConfigureAwait(true);
     InvokeTextBox.Clear(textBox);
-    await Task.Delay(TimeSpan.FromMilliseconds(_timeout));
 });
 ```
